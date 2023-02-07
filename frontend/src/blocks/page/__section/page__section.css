@@ -1,0 +1,8 @@
+.page__section {
+	margin: 0 auto 50px;
+}
+@media screen and (max-width: 320px) {
+	.page__section {
+		margin: 0 auto 35px;
+	}
+}

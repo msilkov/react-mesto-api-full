@@ -1,0 +1,50 @@
+.profile__desc {
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 1.1;
+	color: #ffffff;
+	margin: 0;
+	max-width: 400px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+@media (min-width: 769px) and (max-width: 900px) {
+	.profile__desc {
+		max-width: 300px;
+		font-size: 18px;
+	}
+}
+@media screen and (max-width: 768px) {
+	.profile__desc {
+		max-width: 280px;
+	}
+}
+
+@media screen and (max-width: 720px) {
+	.profile__desc {
+		line-height: 1.2;
+		margin-bottom: 33px;
+		font-size: 16px;
+		text-align: center;
+	}
+}
+
+@media (min-width: 361px) and (max-width: 719px) {
+	.profile__desc {
+		max-width: 270px;
+		font-size: 18px;
+	}
+}
+@media screen and (max-width: 360px) {
+	.profile__desc {
+		max-width: 260px;
+	}
+}
+@media screen and (max-width: 320px) {
+	.profile__desc {
+		max-width: 220px;
+		font-size: 14px;
+	}
+}

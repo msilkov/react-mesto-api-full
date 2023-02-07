@@ -1,0 +1,11 @@
+.card__description {
+	padding: 27px 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+@media screen and (max-width: 320px) {
+	.card__description {
+		padding: 25px 21px 28px 20px;
+	}
+}

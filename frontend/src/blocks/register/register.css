@@ -1,0 +1,88 @@
+.register {
+  margin-bottom: 80px;
+}
+
+.register__title {
+ font-weight: 900;
+font-size: 24px;
+line-height: 29px;
+text-align: center;
+color: #FFFFFF;
+margin: 20px 0 50px 0;
+}
+.register__content{
+ display: block;
+ width: 358px;
+}
+.register__form {
+ display: flex;
+ flex-direction: column;
+ width: 100%;
+ min-height: 350px;
+ margin: 0 0 15px 0;
+ padding: 0;
+ border: none;
+}
+
+.register__input {
+ display: block;
+ width: 100%;
+ margin: 0 0 30px 0;
+ padding: 0 0 11px 0;
+ border: none;
+ border-bottom:2px solid #CCCCCC;
+ outline: none;
+ font-weight: 400;
+ font-size: 14px;
+ line-height: 1;
+ color: #CCCCCC;
+ background-color: #000000;
+
+}
+
+.register__submit-btn {
+ margin-top: auto;
+ padding: 14px 0;
+ background-color: #FFFFFF;
+ border: none;
+ border-radius: 2px;
+ outline: none;
+ font-weight: 400;
+ font-size: 18px;
+ line-height: 1;
+ text-align: center;
+ color: #000000;
+ transition: all 0.5s;
+ cursor: pointer;
+}
+.register__submit-btn:hover{
+ opacity: 0.85;
+}
+
+.register__signin {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+
+}
+.register__login-text {
+margin: 0;
+font-weight: 400;
+font-size: 14px;
+line-height: 1;
+color: #FFFFFF;
+}
+.register__login-link {
+ text-decoration: none;
+ font-weight: 400;
+ font-size: 14px;
+ line-height: 1;
+ transition: all 0.5s;
+ color: #FFFFFF;
+
+}
+.register__login-link:hover{
+ opacity: 0.6;
+}
+
+

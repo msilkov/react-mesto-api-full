@@ -1,0 +1,10 @@
+.popup__img-desc {
+	font-weight: 400;
+	font-size: 12px;
+	line-height: 1.1;
+	color: #ffffff;
+	margin: 10px 0 0 0;
+	position: absolute;
+	left: 0;
+	top: 100%;
+}

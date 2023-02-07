@@ -1,0 +1,15 @@
+.profile__avatar-btn{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  background-color: transparent;
+  background-image: url('../../../images/icons/edit-avatar-icon.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 26px;
+  height: 26px;
+  transition: all .5s;
+  cursor: pointer;
+}

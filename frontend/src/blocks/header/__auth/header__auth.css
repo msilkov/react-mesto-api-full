@@ -1,0 +1,9 @@
+.header__auth{
+  display: flex;
+  align-items: center;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.2;
+  text-align: right;
+  margin-left: auto;
+}

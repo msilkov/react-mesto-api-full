@@ -1,0 +1,10 @@
+.header__auth-link{
+  margin-left: 25px;
+  color: #FFFFFF;
+  text-decoration: none;
+  transition: all 0.5s;
+}
+
+.header__auth-link:hover{
+  opacity: 0.6;
+}
