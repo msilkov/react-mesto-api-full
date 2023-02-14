@@ -1,20 +1,20 @@
-import { useState, useEffect } from "react";
-import { Route, Switch, Redirect, useHistory } from "react-router-dom";
-import Header from "./Header.js";
-import Main from "./Main.js";
-import Footer from "./Footer.js";
-import PopupWithForm from "./PopupWithForm.js";
-import ImagePopup from "./ImagePopup.js";
-import EditProfilePopup from "./EditProfilePopup.js";
-import EditAvatarPopup from "./EditAvatarPopup.js";
-import AddPlacePopup from "./AddPlacePopup.js";
-import Register from "./Register.js";
-import Login from "./Login.js";
-import InfoTooltip from "./InfoTooltip.js";
-import ProtectedRoute from "./ProtectedRoute.js";
-import { currentUserContext } from "../contexts/CurrentUserContext";
-import api from "../utils/api.js";
-import * as auth from "../utils/auth.js";
+import { useState, useEffect } from 'react';
+import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
+import Header from './Header.js';
+import Main from './Main.js';
+import Footer from './Footer.js';
+import PopupWithForm from './PopupWithForm.js';
+import ImagePopup from './ImagePopup.js';
+import EditProfilePopup from './EditProfilePopup.js';
+import EditAvatarPopup from './EditAvatarPopup.js';
+import AddPlacePopup from './AddPlacePopup.js';
+import Register from './Register.js';
+import Login from './Login.js';
+import InfoTooltip from './InfoTooltip.js';
+import ProtectedRoute from './ProtectedRoute.js';
+import { currentUserContext } from '../contexts/CurrentUserContext';
+import api from '../utils/api.js';
+import * as auth from '../utils/auth.js';
 
 function App() {
 	const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
@@ -39,7 +39,22 @@ function App() {
 
 	const [isLoggedIn, setLoggedIn] = useState(false);
 
-	const [email, setEmail] = useState("");
+	const [email, setEmail] = useState('');
+
+	useEffect(() => {
+		auth
+			.getCurrentUser()
+			.then((user) => {
+				if (user) {
+					setLoggedIn(true);
+					setEmail(user.email);
+					history.push('/');
+				}
+			})
+			.catch((err) => {
+				console.log(`Что-то пошло не так токен чек: ${err}`);
+			});
+	}, []);
 
 	useEffect(() => {
 		if (isLoggedIn) {
@@ -63,64 +78,40 @@ function App() {
 		}
 	}, [isLoggedIn]);
 
-	useEffect(() => {
-		tokenCheck();
-	}, []);
-
-	function handleLogin(password, email) {
-		auth
-			.authorize(password, email)
-			.then((data) => {
-				if (!data) {
-					return Promise.reject("No data!");
-				}
-				localStorage.setItem("jwt", data.token);
-				setLoggedIn(true);
-				tokenCheck();
-				history.push("/");
-			})
-			.catch((err) => {
-				console.log(`Что-то пошло не так: ${err}`);
-			});
-	}
-
-	function handleLogout() {
-		localStorage.removeItem("jwt");
-		setEmail("");
-	}
-
 	function handleRegister(password, email) {
 		auth
 			.register(password, email)
 			.then(() => {
 				setRequestStatus(true);
 				handleInfoTooltip();
-				history.push("/sign-in");
+				history.push('/sign-in');
 			})
 			.catch((err) => {
-				console.log(`Что-то пошло не так: ${err}`);
+				console.log(`Что-то пошло не так в регистр: ${err}`);
 				setRequestStatus(false);
 				handleInfoTooltip();
 			});
 	}
 
-	function tokenCheck() {
-		if (!localStorage.getItem("jwt")) return;
-
-		const jwt = localStorage.getItem("jwt");
-
+	function handleLogin(password, email) {
 		auth
-			.getContent(jwt)
-			.then((res) => {
-				if (res) {
-					setEmail(res.data.email);
-					setLoggedIn(true);
-					history.push("/");
+			.authorize(password, email)
+			.then((user) => {
+				if (!user) {
+					return Promise.reject('No data!');
 				}
+				setLoggedIn(true);
+				history.push('/');
 			})
 			.catch((err) => {
-				console.log(`Что-то пошло не так: ${err}`);
+				console.log(`Что-то пошло не так в логин: ${err}`);
+				setRequestStatus(false);
+				handleInfoTooltip();
 			});
+	}
+
+	function handleLogout() {
+		setEmail('');
 	}
 
 	function handleCardLike(card, isOwnLiked) {

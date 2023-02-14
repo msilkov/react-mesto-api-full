@@ -1,15 +1,14 @@
-import { baseUrl, token } from "./utils.js";
+import { BASE_URL } from './utils.js';
+
 class Api {
-	constructor({ baseUrl, headers }) {
+	constructor({ baseUrl, credentials, headers }) {
 		this._baseUrl = baseUrl;
+		this._credentials = credentials;
 		this._headers = headers;
 	}
 
 	_onResponse(res) {
-		if (res.ok) {
-			return res.json();
-		}
-		return Promise.reject(`Ошибка: ${res.status}`);
+		return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
 	}
 
 	_request(url, options) {
@@ -18,21 +17,24 @@ class Api {
 
 	getUserInfo() {
 		return this._request(`${this._baseUrl}/users/me`, {
-			method: "GET",
+			method: 'GET',
+			credentials: this._credentials,
 			headers: this._headers,
 		});
 	}
 
 	getCards() {
 		return this._request(`${this._baseUrl}/cards`, {
-			method: "GET",
+			method: 'GET',
+			credentials: this._credentials,
 			headers: this._headers,
 		});
 	}
 
 	addCard({ name, link }) {
 		return this._request(`${this._baseUrl}/cards`, {
-			method: "POST",
+			method: 'POST',
+			credentials: this._credentials,
 			headers: this._headers,
 			body: JSON.stringify({ name, link }),
 		});
@@ -40,7 +42,8 @@ class Api {
 
 	deleteCard(cardId) {
 		return this._request(`${this._baseUrl}/cards/${cardId}`, {
-			method: "DELETE",
+			method: 'DELETE',
+			credentials: this._credentials,
 			headers: this._headers,
 			body: JSON.stringify({ cardId }),
 		});
@@ -48,7 +51,8 @@ class Api {
 
 	setUserInfo({ name, about }) {
 		return this._request(`${this._baseUrl}/users/me`, {
-			method: "PATCH",
+			method: 'PATCH',
+			credentials: this._credentials,
 			headers: this._headers,
 			body: JSON.stringify({ name, about }),
 		});
@@ -56,7 +60,8 @@ class Api {
 
 	setAvatar({ avatar }) {
 		return this._request(`${this._baseUrl}/users/me/avatar`, {
-			method: "PATCH",
+			method: 'PATCH',
+			credentials: this._credentials,
 			headers: this._headers,
 			body: JSON.stringify({ avatar }),
 		});
@@ -64,7 +69,8 @@ class Api {
 
 	toggleCardLikeStatus(cardId, isOwnLiked) {
 		return this._request(`${this._baseUrl}/cards/${cardId}/likes`, {
-			method: `${isOwnLiked ? "DELETE" : "PUT"}`,
+			method: `${isOwnLiked ? 'DELETE' : 'PUT'}`,
+			credentials: this._credentials,
 			headers: this._headers,
 			body: JSON.stringify(),
 		});
@@ -72,10 +78,10 @@ class Api {
 }
 
 const api = new Api({
-	baseUrl: baseUrl,
+	baseUrl: 'https://api.msilkov.mesto.nomoredomainsclub.ru',
+	credentials: 'include',
 	headers: {
-		authorization: token,
-		"Content-Type": "application/json",
+		'Content-Type': 'application/json',
 	},
 });
 

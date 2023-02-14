@@ -5,12 +5,12 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const express = require('express');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const { cors } = require('./middlewares/cors');
 
 const cardsRouter = require('./routes/cards');
 const usersRouter = require('./routes/users');
 
 const { auth } = require('./middlewares/auth');
+const { corsHandler } = require('./middlewares/cors');
 
 const { login, createUser } = require('./controllers/users');
 const {
@@ -38,6 +38,8 @@ app.get('/crash-test', () => {
   }, 0);
 });
 
+app.use(corsHandler);
+
 app.post('/signin', signInValidation, login);
 app.post('/signup', signUpValidation, createUser);
 
@@ -47,8 +49,6 @@ app.use('/cards', cardsRouter);
 app.use('/users', usersRouter);
 
 app.use('*', incorrectRouteHandler);
-
-app.use(cors);
 
 app.use(errorLogger);
 

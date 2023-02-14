@@ -1,39 +1,42 @@
-export const BASE_URL = "https://auth.nomoreparties.co";
+import { BASE_URL } from './utils.js';
 
-const request = ({ url, method = "POST", token, data }) => {
+const request = ({
+	url,
+	method = 'POST',
+	credentials = 'same-origin',
+	data,
+}) => {
 	return fetch(`${BASE_URL}${url}`, {
 		method,
+		credentials,
 		headers: {
-			"Content-Type": "application/json",
-			...(!!token && { Authorization: `Bearer ${token}` }),
+			'Content-Type': 'application/json',
 		},
 		...(!!data && { body: JSON.stringify(data) }),
-	}).then((res) => {
-		if (res.ok) {
-			return res.json();
-		}
-		return Promise.reject(res.status);
-	});
+	}).then((res) =>
+		res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`)
+	);
 };
 
 export const register = (password, email) => {
 	return request({
-		url: "/signup",
+		url: '/signup',
 		data: { password, email },
 	});
 };
 
 export const authorize = (password, email) => {
 	return request({
-		url: "/signin",
+		url: '/signin',
+		credentials: 'include',
 		data: { password, email },
 	});
 };
 
-export const getContent = (token) => {
+export const getCurrentUser = () => {
 	return request({
-		url: "/users/me",
-		method: "GET",
-		token,
+		url: '/users/me',
+		method: 'GET',
+		credentials: 'include',
 	});
 };
