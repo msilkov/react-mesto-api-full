@@ -45,5 +45,6 @@ export const logout = () => {
 	return request({
 		url: '/logout',
 		method: 'GET',
+		credentials: 'include',
 	});
 };

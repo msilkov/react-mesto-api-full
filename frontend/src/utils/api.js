@@ -78,7 +78,7 @@ class Api {
 }
 
 const api = new Api({
-	baseUrl: 'https://api.msilkov.mesto.nomoredomainsclub.ru',
+	baseUrl: BASE_URL,
 	credentials: 'include',
 	headers: {
 		'Content-Type': 'application/json',
