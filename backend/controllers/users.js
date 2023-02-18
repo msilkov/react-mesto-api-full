@@ -2,10 +2,9 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
-const { NODE_ENV, JWT_SECRET } = process.env;
-const {
-  userResFormat, STATUS_OK,
-} = require('../utils/utils');
+const { NODE_ENV, JWT_SECRET } = require('../config');
+const { userResFormat } = require('../utils/utils');
+const { STATUS_OK } = require('../utils/constants');
 
 const NotFoundError = require('../errors/not-found-err');
 const BadRequestError = require('../errors/bad-req-err');
@@ -25,12 +24,26 @@ const login = (req, res, next) => {
           maxAge: 3600000 * 24 * 7,
           httpOnly: true,
           sameSite: 'none',
+          secure: true,
+          domain: 'msilkov.mesto.nomoredomainsclub.ru',
         })
-        .status(STATUS_OK).send(userResFormat(user));
+        .status(STATUS_OK)
+        .send(userResFormat(user));
     })
-    .catch((err) => {
-      next(err);
-    });
+    .catch(next);
+};
+
+const logout = (req, res, next) => {
+  try {
+    res.clearCookie('jwt', {
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true,
+      domain: 'msilkov.mesto.nomoredomainsclub.ru',
+    }).send({ message: 'logout complete' });
+  } catch (err) {
+    next(err);
+  }
 };
 
 const createUser = (req, res, next) => {
@@ -53,7 +66,8 @@ const createUser = (req, res, next) => {
       if (err.name === 'ValidationError') {
         next(new BadRequestError());
         return;
-      } if (err.code === 11000) {
+      }
+      if (err.code === 11000) {
         next(new ConflictError('email'));
         return;
       }
@@ -67,22 +81,14 @@ const getCurrentUser = (req, res, next) => {
     .then((user) => {
       res.status(STATUS_OK).send(userResFormat(user));
     })
-    .catch((err) => {
-      if (err.name === 'CastError') {
-        next(new BadRequestError());
-        return;
-      }
-      next(err);
-    });
+    .catch(next);
 };
 
 const getUsers = (req, res, next) => {
   User.find({})
     .then((users) => users.map((user) => userResFormat(user)))
     .then((users) => res.status(STATUS_OK).send(users))
-    .catch((err) => {
-      next(err);
-    });
+    .catch(next);
 };
 
 const getUserById = (req, res, next) => {
@@ -120,7 +126,7 @@ const patchUserProfile = (req, res, next) => {
       res.status(STATUS_OK).send(userResFormat(user));
     })
     .catch((err) => {
-      if (err.name === 'CastError' || err.name === 'ValidationError') {
+      if (err.name === 'ValidationError') {
         next(new BadRequestError());
         return;
       }
@@ -147,7 +153,7 @@ const patchUserAvatar = (req, res, next) => {
       res.status(STATUS_OK).send(userResFormat(user));
     })
     .catch((err) => {
-      if (err.name === 'CastError' || err.name === 'ValidationError') {
+      if (err.name === 'ValidationError') {
         next(new BadRequestError());
         return;
       }
@@ -157,6 +163,7 @@ const patchUserAvatar = (req, res, next) => {
 
 module.exports = {
   login,
+  logout,
   createUser,
   getUsers,
   getUserById,

@@ -1,7 +1,7 @@
 const {
   celebrate, Joi,
 } = require('celebrate');
-const { REG_LINK } = require('../utils/utils');
+const { REG_LINK } = require('../utils/constants');
 
 const signInValidation = celebrate({
   body: Joi.object().keys({
@@ -29,7 +29,7 @@ const createCardValidation = celebrate({
 
 const idValidation = celebrate({
   params: Joi.object().keys({
-    _id: Joi.string().hex().length(24),
+    _id: Joi.string().required().hex().length(24),
   }),
 });
 

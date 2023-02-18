@@ -1,4 +1,4 @@
-const { allowedCors } = require('../utils/allowedCors');
+const { ALLOWED_CORS } = require('../utils/allowedCors');
 
 const corsHandler = (req, res, next) => {
   const { origin } = req.headers;
@@ -6,12 +6,11 @@ const corsHandler = (req, res, next) => {
   const requestHeaders = req.headers['access-control-request-headers'];
   const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
-  if (allowedCors.includes(origin)) {
+  if (ALLOWED_CORS.includes(origin)) {
     res.header('Access-Control-Allow-Origin', origin);
     res.header('Access-Control-Allow-Credentials', 'true');
   }
   if (method === 'OPTIONS') {
-    // разрешаем кросс-доменные запросы любых типов (по умолчанию)
     res.header('Access-Control-Allow-Headers', requestHeaders);
     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS);
     res.end();

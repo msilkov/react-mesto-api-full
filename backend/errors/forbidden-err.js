@@ -1,4 +1,4 @@
-const { FORBIDDEN } = require('../utils/utils');
+const { FORBIDDEN } = require('../utils/constants');
 
 class ForbiddenError extends Error {
   constructor(marker, message = 'У пользователя не хватает прав доступа к запрашиваемому ресурсу') {

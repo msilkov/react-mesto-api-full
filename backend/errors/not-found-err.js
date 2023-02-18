@@ -1,4 +1,4 @@
-const { NOT_FOUND } = require('../utils/utils');
+const { NOT_FOUND } = require('../utils/constants');
 
 class NotFoundError extends Error {
   constructor(marker, message = 'Передан некорректный идентификатор') {

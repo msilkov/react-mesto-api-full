@@ -1,4 +1,4 @@
-const { INTERNAL_SERVER_ERROR } = require('../utils/utils');
+const { INTERNAL_SERVER_ERROR } = require('../utils/constants');
 
 const errorsHandler = (err, req, res, next) => {
   const { statusCode = INTERNAL_SERVER_ERROR, message } = err;

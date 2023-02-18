@@ -1,4 +1,4 @@
-const { BAD_REQUEST } = require('../utils/utils');
+const { BAD_REQUEST } = require('../utils/constants');
 
 class BadRequestError extends Error {
   constructor(message = 'Переданы некорректные данные') {
