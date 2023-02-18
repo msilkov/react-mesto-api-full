@@ -52,9 +52,9 @@ function App() {
 				}
 			})
 			.catch((err) => {
-				console.log(`Что-то пошло не так токен чек: ${err}`);
+				console.log(`Что-то пошло не так: ${err}`);
 			});
-	}, []);
+	}, [history]);
 
 	useEffect(() => {
 		if (isLoggedIn) {
@@ -87,7 +87,7 @@ function App() {
 				history.push('/sign-in');
 			})
 			.catch((err) => {
-				console.log(`Что-то пошло не так в регистр: ${err}`);
+				console.log(`Что-то пошло не так: ${err}`);
 				setRequestStatus(false);
 				handleInfoTooltip();
 			});
@@ -104,14 +104,17 @@ function App() {
 				history.push('/');
 			})
 			.catch((err) => {
-				console.log(`Что-то пошло не так в логин: ${err}`);
+				console.log(`Что-то пошло не так: ${err}`);
 				setRequestStatus(false);
 				handleInfoTooltip();
 			});
 	}
 
 	function handleLogout() {
-		setEmail('');
+		auth.logout().then(()=>{
+			setLoggedIn(false);
+			history.push('/sign-in');
+		})
 	}
 
 	function handleCardLike(card, isOwnLiked) {

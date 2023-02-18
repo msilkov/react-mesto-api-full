@@ -40,3 +40,10 @@ export const getCurrentUser = () => {
 		credentials: 'include',
 	});
 };
+
+export const logout = () => {
+	return request({
+		url: '/logout',
+		method: 'GET',
+	});
+};
