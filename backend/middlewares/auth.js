@@ -7,6 +7,7 @@ const auth = (req, res, next) => {
   const token = req.cookies.jwt;
   if (!token) {
     next(new AuthError('Необходима авторизация'));
+    return;
   }
   let payload;
   try {
@@ -16,7 +17,7 @@ const auth = (req, res, next) => {
   }
   req.user = payload;
 
-  return next();
+  next();
 };
 
 module.exports = {

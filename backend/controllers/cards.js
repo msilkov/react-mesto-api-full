@@ -7,7 +7,7 @@ const BadRequestError = require('../errors/bad-req-err');
 const ForbiddenError = require('../errors/forbidden-err');
 
 const getCards = (req, res, next) => {
-  Card.find({})
+  Card.find({ owner: req.user._id })
     .populate(['owner', 'likes'])
     .then((cards) => cards.map((card) => cardResFormat(card)))
     .then((cards) => res.status(STATUS_OK).send(cards))

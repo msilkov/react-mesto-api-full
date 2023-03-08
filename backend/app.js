@@ -1,4 +1,4 @@
-require('dotenv').config();
+// require('dotenv').config();
 const { errors } = require('celebrate');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
@@ -32,17 +32,17 @@ app.use(cookieParser());
 
 app.use(requestLogger);
 
-app.get('/crash-test', () => {
-  setTimeout(() => {
-    throw new Error('Сервер сейчас упадёт');
-  }, 0);
-});
+// app.get('/crash-test', () => {
+//   setTimeout(() => {
+//     throw new Error('Сервер сейчас упадёт');
+//   }, 0);
+// });
 
 app.use(corsHandler);
 
-app.post('/signin', signInValidation, login);
 app.post('/signup', signUpValidation, createUser);
-app.get('/logout', logout);
+app.post('/signin', signInValidation, login);
+app.get('/logout', logout); // POST
 
 app.use(auth);
 

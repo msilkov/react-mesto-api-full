@@ -25,7 +25,7 @@ const login = (req, res, next) => {
           httpOnly: true,
           sameSite: 'none',
           secure: true,
-          domain: 'msilkov.mesto.nomoredomainsclub.ru',
+          domain: NODE_ENV === 'production' ? 'msilkov.mesto.nomoredomainsclub.ru' : 'localhost',
         })
         .status(STATUS_OK)
         .send(userResFormat(user));
